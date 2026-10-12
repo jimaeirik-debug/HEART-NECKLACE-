@@ -20,8 +20,8 @@ img{display:block;width:100%;height:100%;object-fit:cover}
 .hero-image img{object-position:center}
 .placeholder-label{position:absolute;inset:0;display:grid;place-items:center;padding:24px;text-align:center;color:rgba(255,255,255,.8);font-size:10px;letter-spacing:.14em}
 .hero-overlay{position:absolute;right:7%;bottom:172px;width:min(470px,40%)}
-.scribble{margin:0 0 18px;color:var(--red);font-family:"Caveat Brush","Brush Script MT",cursive;font-size:clamp(42px,5.2vw,74px);font-weight:400;line-height:.82;letter-spacing:-.035em;transform:rotate(-3.5deg);transform-origin:left center;text-shadow:.35px .35px 0 rgba(120,0,0,.22)}
-.scribble-small{font-size:clamp(32px,4vw,48px);letter-spacing:-.025em}
+.scribble{margin:0 0 18px;color:#8f0d16;font-family:"Rock Salt",sans-serif;font-size:clamp(30px,3.8vw,54px);font-weight:400;line-height:1.02;letter-spacing:-.075em;text-transform:uppercase;transform:rotate(-1.4deg) skewX(-2deg);transform-origin:left center;-webkit-text-stroke:.2px rgba(120,0,8,.55);text-shadow:.7px .25px 0 rgba(113,0,8,.28),-.35px .45px 0 rgba(113,0,8,.18)}
+.scribble-small{font-size:clamp(24px,2.8vw,38px);letter-spacing:-.065em}
 .hero-card{width:100%;padding:28px 30px;background:rgba(251,247,239,.92);backdrop-filter:blur(5px)}
 h1,h2{margin:0;font-family:Georgia,"Times New Roman",serif;font-weight:400;letter-spacing:-.035em;line-height:.96}
 h1{font-size:clamp(38px,4.4vw,64px)}
@@ -34,7 +34,7 @@ h1{font-size:clamp(38px,4.4vw,64px)}
 .proof article>span{color:var(--red);font-family:Georgia,"Times New Roman",serif;font-style:italic;font-size:14px}
 .proof h2{font-size:28px;margin:13px 0 10px}
 .proof p{margin:0;color:var(--muted);font-size:14px;line-height:1.55}
-.process{margin:58px 0 0;color:var(--red);font-family:"Caveat Brush","Brush Script MT",cursive;font-size:31px;line-height:.9;letter-spacing:-.025em;transform:rotate(-2deg);text-shadow:.3px .3px 0 rgba(120,0,0,.18)}
+.process{margin:58px 0 0;color:#8f0d16;font-family:"Rock Salt",sans-serif;font-size:clamp(17px,1.8vw,24px);line-height:1.35;letter-spacing:-.055em;text-transform:uppercase;transform:rotate(-.8deg);-webkit-text-stroke:.15px rgba(120,0,8,.45)}
 .car-feature{max-width:var(--max);margin:auto;padding:0 28px 145px}
 .car-frame{position:relative;width:100%;aspect-ratio:16/8.5;min-height:480px;overflow:hidden;background:linear-gradient(135deg,#6f1115,#bd4439 55%,#6e1115)}
 .car-caption{margin-top:28px;display:flex;align-items:flex-end;justify-content:space-between;gap:30px}
@@ -66,7 +66,7 @@ footer a{text-decoration:none;letter-spacing:.14em}
   .hero-image{aspect-ratio:4/5;min-height:0}
   .hero-image img{object-position:42% center}
   .hero-overlay{position:relative;right:auto;bottom:auto;width:100%;margin-top:-28px;padding:0 10px}
-  .scribble{font-size:46px;margin-left:10px}
+  .scribble{font-size:32px;margin-left:8px;letter-spacing:-.065em}
   .hero-card{padding:26px 22px}
   h1{font-size:42px}
   .proof{padding:0 20px 100px}
