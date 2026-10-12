@@ -17,19 +17,38 @@ h1,h2,h3{font-family:Georgia,'Times New Roman',serif;font-weight:400;letter-spac
 .quiet-link{display:inline-block;padding-bottom:5px;text-decoration:none;border-bottom:1px solid var(--ink);line-height:1.5}
 .red-art{line-height:0}
 .red-art svg{display:block;width:100%;height:auto;overflow:visible}
-.polaroid{width:100%;padding:9px 9px 26px;background:#fdfbf5;box-shadow:0 5px 17px rgba(48,35,28,.13),0 0 0 1px rgba(60,40,22,.045);transform-origin:center}
-.polaroid img{width:100%;height:auto;aspect-ratio:3/4;object-fit:cover;background:#ded5c6}
+/* Original photographs remain intact. Only their outer edges are masked like hand-cut magazine clippings. */
+.cutout{
+  width:100%;
+  padding:0;
+  margin:0;
+  background:transparent;
+  border:0;
+  box-shadow:none;
+  filter:drop-shadow(0 5px 5px rgba(48,35,28,.11));
+  transform-origin:center;
+  --cut:polygon(3% 1%,29% 0%,56% 1%,77% 0%,97% 2%,99% 26%,97% 52%,99% 76%,96% 98%,73% 99%,47% 98%,20% 100%,1% 97%,2% 74%,0% 49%,2% 22%);
+}
+.cutout img{
+  display:block;
+  width:100%;
+  height:auto;
+  aspect-ratio:auto;
+  object-fit:contain;
+  background:transparent;
+  clip-path:var(--cut);
+}
 .hero{max-width:var(--max);margin:0 auto;padding:22px 34px 145px;position:relative}
 .hero-image{height:auto;aspect-ratio:1376/768;max-height:780px;overflow:hidden;background:#ad9285}
 .hero-image img{object-position:center}
 .hero-art{position:absolute;width:clamp(260px,29vw,420px);top:6%;left:7%;transform:rotate(-3.6deg);z-index:1}
 .hero-art .red-art-you{width:100%}
 .hero-under{position:relative;display:grid;grid-template-columns:.68fr 1fr;align-items:start;gap:6%;padding:0 6%}
-.p-hero{max-width:196px;margin:-41px 0 0 13%;transform:rotate(-7deg);z-index:2}
+.p-hero{max-width:196px;margin:-41px 0 0 13%;transform:rotate(-4deg);z-index:2;--cut:polygon(2% 1%,21% 0%,48% 1.8%,70% .5%,98% 2.5%,97% 25%,100% 51%,98% 73%,97% 99%,72% 97%,47% 100%,22% 98%,1% 99%,2.5% 70%,.5% 43%,3% 18%)}
 .hero-copy{padding:58px 0 0;max-width:580px}
 .hero-copy h1{margin:15px 0 21px;font-size:clamp(43px,4.7vw,69px);line-height:.98}
 .hero-copy .intro{font-family:Georgia,'Times New Roman',serif;color:#4c403a;font-size:17px;line-height:1.4;margin-bottom:27px}
-.details{position:relative;max-width:1200px;margin:auto;padding:55px 46px 180px;display:grid;grid-template-columns:.8fr 1.2fr;column-gap:95px;row-gap:26px}
+.details{position:relative;max-width:1200px;margin:auto;padding:55px 46px 100px;display:grid;grid-template-columns:.8fr 1.2fr;column-gap:95px;row-gap:26px}
 .details-head h2{font-size:clamp(45px,5vw,75px);line-height:.98;margin-top:16px}
 .detail-list{padding-top:12px;max-width:600px}
 .detail{display:grid;grid-template-columns:44px 1fr;gap:15px;padding:22px 0;border-top:1px solid var(--border)}
@@ -37,19 +56,12 @@ h1,h2,h3{font-family:Georgia,'Times New Roman',serif;font-weight:400;letter-spac
 .detail h3{font-size:25px;margin-bottom:7px}
 .detail p{max-width:390px;font-size:14px;line-height:1.5;color:var(--muted)}
 .detail-list .quiet-link{margin-top:18px}
-.details-photos{grid-column:1/-1;position:relative;min-height:325px}
-.p-details-one{position:absolute;width:164px;top:33px;left:7%;transform:rotate(6deg)}
-.p-details-two{position:absolute;width:198px;top:10px;right:10%;transform:rotate(-5deg)}
+.details-photos{grid-column:1/-1;position:relative;min-height:310px}
+.p-details-one{position:absolute;width:164px;top:33px;left:7%;transform:rotate(3.5deg);--cut:polygon(3% 0%,26% 1%,52% .2%,77% 2%,99% 1%,97.5% 22%,100% 46%,97% 68%,98% 97%,75% 99%,51% 97.4%,23% 100%,1% 98%,2.5% 79%,0% 56%,2% 34%)}
+.p-details-two{position:absolute;width:198px;top:10px;right:10%;transform:rotate(-3deg);--cut:polygon(1.5% 2%,19% 0%,46% 1%,68% 0%,96.5% 3%,99% 20%,98% 44%,100% 67%,96% 98%,76% 98.5%,49% 97%,28% 100%,2% 98%,0% 76%,2% 51%,1% 26%)}
 .details-art{position:absolute;width:175px;top:80px;left:42%;transform:rotate(8deg)}
 .details-art .red-art-look{width:100%}
-.film-wall{max-width:var(--max);margin:auto;padding:0 34px 165px}
-.film-wall-head{display:flex;align-items:center;gap:45px;padding:0 8%}
-.film-wall-head .line{height:1px;background:var(--border);flex:1}
-.film-collection{position:relative;min-height:430px;max-width:1100px;margin:50px auto 0}
-.p-film-one{position:absolute;width:210px;top:50px;left:8%;transform:rotate(-8deg)}
-.p-film-two{position:absolute;width:183px;top:0;left:44%;transform:rotate(6deg)}
-.p-film-three{position:absolute;width:230px;top:65px;right:4%;transform:rotate(-4deg)}
-.reviews{max-width:1200px;margin:auto;padding:95px 46px 150px;border-top:1px solid var(--border)}
+.reviews{max-width:1200px;margin:auto;padding:95px 46px 135px;border-top:1px solid var(--border)}
 .review-heading{display:grid;grid-template-columns:.65fr 1fr;gap:9%;align-items:center}
 .reviews-art{width:265px;transform:rotate(-4deg)}
 .reviews-art .red-art-love{width:100%}
@@ -61,7 +73,7 @@ h1,h2,h3{font-family:Georgia,'Times New Roman',serif;font-weight:400;letter-spac
 .stars{font-size:11px;letter-spacing:.14em;color:var(--red)}
 .review-list .quiet-link{margin-top:25px}
 .review-photo{padding:15px 0 0}
-.p-review{width:210px;transform:rotate(7deg)}
+.p-review{width:210px;transform:rotate(4deg);--cut:polygon(3% 1%,28% 0%,52% 1%,83% .5%,98% 4%,97% 28%,99.5% 50%,97% 74%,99% 96%,72% 99%,50% 98%,21% 100%,1% 96%,2% 77%,.3% 48%,2% 24%)}
 .faq{max-width:1000px;margin:auto;padding:95px 45px 145px;border-top:1px solid var(--border);display:grid;grid-template-columns:.9fr 1.1fr;gap:55px}
 .faq h2{font-size:clamp(40px,4.8vw,64px);margin-top:14px;line-height:1}
 details{padding:19px 0;border-top:1px solid var(--border)}
@@ -72,7 +84,7 @@ summary:after{content:"+"}
 details[open] summary:after{content:"—"}
 details p{font-size:14px;color:var(--muted);line-height:1.55;margin:13px 0 0}
 .final-cta{max-width:1160px;margin:0 auto 100px;padding:20px 50px 50px;display:grid;grid-template-columns:.72fr 1.28fr;align-items:center;gap:8%;border-top:1px solid var(--border)}
-.p-final{width:225px;transform:rotate(-6deg)}
+.p-final{width:225px;transform:rotate(-3deg);--cut:polygon(2% 2%,23% 0%,43% 1%,76% 0%,98% 2%,99% 29%,97.5% 54%,100% 77%,96% 98%,78% 97%,52% 100%,24% 98%,2% 99%,1% 82%,2% 56%,.2% 29%)}
 .final-content .red-art-romantics{width:min(440px,95%);margin:0 0 20px;transform:rotate(2.5deg)}
 .final-content h2{font-size:clamp(56px,6.2vw,87px);margin:15px 0 28px;line-height:.95}
 footer{display:flex;justify-content:space-between;gap:30px;padding:35px 34px 100px;font-size:10px;color:var(--muted);border-top:1px solid var(--border)}
@@ -97,20 +109,13 @@ footer a{text-decoration:none;font-weight:700;letter-spacing:.13em}
 .p-details-one{width:118px;left:0;top:30px}
 .p-details-two{width:138px;right:0;top:0}
 .details-art{width:95px;left:43%;top:98px}
-.film-wall{padding:0 14px 100px}
-.film-wall-head{padding:0 11px;gap:20px}
-.film-collection{min-height:285px;margin-top:45px}
-.p-film-one{width:105px;left:1%;top:45px}
-.p-film-two{width:114px;left:34%;top:0}
-.p-film-three{width:115px;right:0;top:65px}
-.polaroid{padding:6px 6px 17px}
 .reviews{padding:78px 24px 110px}
 .review-heading{grid-template-columns:1fr;gap:35px}
 .reviews-art{width:190px}
 .review-heading h2{font-size:50px}
 .review-content{display:block;margin-top:40px}
 .review-list blockquote p{font-size:19px}
-.review-photo{display:none}
+.review-photo{display:block;padding:26px 0 0}.p-review{width:135px;margin:0 6% 0 auto;transform:rotate(3deg)}
 .faq{display:block;padding:78px 24px 100px}
 .faq-heading{margin-bottom:35px}
 .final-cta{margin:0 14px 70px;padding:35px 12px 15px;display:flex;flex-direction:column-reverse;align-items:flex-start;gap:35px}
@@ -121,4 +126,4 @@ footer{padding:30px 20px 100px;flex-direction:column}
 .mobile-buy{position:fixed;z-index:30;display:flex;justify-content:space-between;align-items:center;bottom:10px;left:10px;right:10px;background:#221b19;color:white;padding:14px 15px;font-size:10px;letter-spacing:.11em;box-shadow:0 12px 30px rgba(0,0,0,.25)}
 .mobile-buy a{font-weight:700;text-decoration:none;color:white}
 }
-@media(max-width:380px){.hero-copy h1{font-size:39px}.film-collection{min-height:240px}.p-film-one{width:90px}.p-film-two{width:100px}.p-film-three{width:99px}.details-art{left:40%}}
+@media(max-width:380px){.hero-copy h1{font-size:39px}.details-art{left:40%}}
