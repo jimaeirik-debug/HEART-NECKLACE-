@@ -29,7 +29,7 @@
  <section class="hero" aria-labelledby="hero-title">
   <div class="hero-topline"><span>THE HEART & SPOON NECKLACE</span><span>LANA DEL REY–INSPIRED</span><span>VOL. 001</span></div>
   <p class="masthead" aria-label="HEARTSICK">HEART<em>SICK.</em></p>
-  <figure class="hero-picture"><img src="https://raw.githubusercontent.com/jimaeirik-debug/HEART-NECKLACE-/main/BUST.png" alt="The heart and spoon necklace displayed on a burgundy velvet bust against the pink page" width="750" height="1129" fetchpriority="high" decoding="async"><figcaption><span>FIG. 01</span><span>THE HEART & SPOON</span></figcaption></figure>
+  <figure class="hero-picture"><img src="https://raw.githubusercontent.com/jimaeirik-debug/HEART-NECKLACE-/main/BUST.png" alt="Gold heart and spoon necklace displayed on a burgundy velvet bust" width="750" height="1129" fetchpriority="high" decoding="async"><figcaption><span>FIG. 01</span><span>THE HEART & SPOON</span></figcaption></figure>
   <div class="hero-copy">
    <p class="eyebrow">FOR THE ROMANTICS</p>
    <h1 id="hero-title">She wore<br>her heart<br><i>out.</i></h1>
@@ -47,10 +47,10 @@
   </div>
   <div class="carousel" aria-roledescription="carousel" aria-label="Heart and spoon necklace photo gallery">
    <div class="carousel-track" id="gallery-track" tabindex="0" aria-label="Swipe to see necklace photographs">
-    <figure class="carousel-slide" id="gallery-1" aria-label="1 of 2">
+    <figure class="carousel-slide" id="gallery-1" aria-label="Photograph 1 of 2">
       <img src="https://raw.githubusercontent.com/jimaeirik-debug/HEART-NECKLACE-/main/necklace-on-velvet.png" alt="Close-up of the heart pendant against burgundy velvet" loading="lazy" decoding="async"><figcaption><span>01 / 02</span> THE HEART</figcaption>
     </figure>
-    <figure class="carousel-slide" id="gallery-2" aria-label="2 of 2">
+    <figure class="carousel-slide" id="gallery-2" aria-label="Photograph 2 of 2">
       <img src="https://raw.githubusercontent.com/jimaeirik-debug/HEART-NECKLACE-/main/luxury-velvet-jewelry-backdrop%20(1).png" alt="Close-up of the heart and spoon necklace details on velvet" loading="lazy" decoding="async"><figcaption><span>02 / 02</span> THE PENDANT</figcaption>
     </figure>
    </div>
@@ -105,7 +105,7 @@
    count.textContent=String(current+1).padStart(2,"0")+" — "+String(slides.length).padStart(2,"0");
    dots.forEach((d,k)=>{d.classList.toggle("active",k===current);if(k===current)d.setAttribute("aria-current","true");else d.removeAttribute("aria-current");});
  }
- function select(i){update(i);const slide=slides[current];track.scrollTo({left:slide.offsetLeft-slides[0].offsetLeft,behavior:window.matchMedia("(prefers-reduced-motion: reduce)").matches?"instant":"smooth"});}
+ function select(i){update(i);const slide=slides[current];track.scrollTo({left:slide.offsetLeft-slides[0].offsetLeft,behavior:window.matchMedia("(prefers-reduced-motion: reduce)").matches?"auto":"smooth"});}
  document.getElementById("gallery-prev").addEventListener("click",()=>select(current-1));
  document.getElementById("gallery-next").addEventListener("click",()=>select(current+1));
  dots.forEach((d,i)=>d.addEventListener("click",()=>select(i)));
