@@ -29,3 +29,21 @@
 
 /* Genuine Etsy review carousel, retaining original editorial typography */
 .review-carousel{max-width:850px;margin:0 auto 22px}.review-slides{min-height:185px;display:grid;align-items:center}.review-slide{margin:0;grid-area:1/1}.review-slide[hidden]{display:none!important}.review-slide figcaption{margin-top:20px;font-family:var(--sans);font-size:11px;letter-spacing:.13em;color:var(--muted)}.review-controls{display:flex;justify-content:center;align-items:center;gap:26px;margin:12px auto 26px;font:12px var(--sans);letter-spacing:.12em;color:var(--wine)}.review-buttons{display:flex;gap:9px}.review-buttons button{background:transparent;border:1px solid var(--rule);color:var(--wine);width:46px;height:44px;font-size:22px;cursor:pointer}.review-buttons button:hover{background:var(--wine);color:var(--ivory)}@media(max-width:700px){.review-slides{min-height:220px}.review-slide blockquote{font-size:clamp(25px,7vw,39px)}.review-slide figcaption{font-size:10px}}
+
+/* Mobile photo gallery: fit image naturally, eliminate dead space and wrapped pagination */
+@media(max-width:700px){
+.lookbook{padding-bottom:72px}
+.carousel{margin-top:30px}
+.carousel-track{align-items:stretch}
+.carousel-slide{display:flex;flex-direction:column;justify-content:flex-start}
+.carousel-slide img{display:block;width:100%;height:auto;aspect-ratio:auto;min-height:0;max-height:420px;object-fit:contain;object-position:center}
+.carousel-slide figcaption{padding:12px 0 0;gap:16px}
+.carousel-controls{display:grid;grid-template-columns:1fr auto;gap:8px 12px;align-items:center;margin-top:18px}
+.carousel-counter{grid-column:1;grid-row:1}
+.carousel-arrows{grid-column:2;grid-row:1;justify-self:end}
+.carousel-dots{grid-column:1/-1;grid-row:2;display:flex;flex-wrap:nowrap;justify-content:center;max-width:none;width:100%;gap:8px;margin-top:4px}
+.carousel-dots button{width:34px;min-width:34px;height:36px;min-height:36px}
+.carousel-arrows button{width:44px;height:44px}
+.last-cta h2{font-size:clamp(70px,16vw,108px)}
+}
+@media(max-width:400px){.carousel-slide img{max-height:360px}.carousel-dots{gap:5px}}
