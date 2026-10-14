@@ -55,3 +55,7 @@
 /* Brand wordmark refresh — retain original HEARTSICK visual direction */
 @media(min-width:701px){.masthead{font-size:clamp(85px,12.3vw,190px);letter-spacing:-.075em;left:2%}}
 @media(max-width:700px){.masthead{font-size:12.4vw;letter-spacing:-.075em;white-space:nowrap}}
+
+/* Hero HEARTSICK wordmark: 30% larger, preserving existing type styling */
+@media(min-width:701px){.masthead{font-size:clamp(110.5px,15.99vw,247px)}}
+@media(max-width:700px){.masthead{font-size:16.12vw}}
