@@ -62,12 +62,7 @@
    </div>
   </div>
  </section>
- <section class="review" aria-labelledby="review-heading">
-   <p class="eyebrow">A NOTE FROM AN ETSY BUYER</p>
-   <h2 id="review-heading">Loved in<br><i>real life.</i></h2>
-   <blockquote>“The necklace is beautiful and exactly as pictured, the quality is excellent.”</blockquote>
-   <a href="https://www.etsy.com/listing/1269458252/" target="_blank" rel="noopener noreferrer" class="text-link">READ REVIEWS ON ETSY <span aria-hidden="true">↗</span></a>
- </section>
+ <section class="review" aria-labelledby="review-heading"><p class="eyebrow">NOTES FROM ETSY BUYERS</p><h2 id="review-heading">Loved in<br><i>real life.</i></h2><div class="review-carousel" aria-label="Verified Etsy buyer reviews"><div class="review-slides" id="review-slides" aria-live="polite"><figure class="review-slide"><blockquote>“The necklace is beautiful and exactly as pictured, the quality is excellent.”</blockquote><figcaption>— Sebastian, VERIFIED ETSY BUYER</figcaption></figure><figure class="review-slide" hidden><blockquote>“Beautiful necklace :) fast shipping”</blockquote><figcaption>— Janae, VERIFIED ETSY BUYER</figcaption></figure><figure class="review-slide" hidden><blockquote>“Very beautiful, feels heavy and well crafted”</blockquote><figcaption>— Clarissa, VERIFIED ETSY BUYER</figcaption></figure><figure class="review-slide" hidden><blockquote>“Very sweet and looking just like the pictures.”</blockquote><figcaption>— David, VERIFIED ETSY BUYER</figcaption></figure><figure class="review-slide" hidden><blockquote>“i really like it thank you”</blockquote><figcaption>— Etsy buyer, VERIFIED ETSY BUYER</figcaption></figure></div><div class="review-controls"><span id="review-counter" aria-live="polite">01 / 05</span><div class="review-buttons"><button type="button" id="review-prev" aria-label="Previous review">←</button><button type="button" id="review-next" aria-label="Next review">→</button></div></div></div><a href="https://www.etsy.com/listing/1269458252/" target="_blank" rel="noopener noreferrer" class="text-link">READ ALL REVIEWS ON ETSY <span aria-hidden="true">↗</span></a></section>
  <section class="last-cta" aria-label="Shop the necklace">
    <p class="eyebrow">THE HEART & SPOON NECKLACE</p>
    <h2>A little heart.<br><i>A hidden spoon.</i></h2>
@@ -109,5 +104,5 @@
  track.addEventListener("scroll",()=>{if(ticking)return;ticking=true;requestAnimationFrame(()=>{const rect=track.getBoundingClientRect();let best=0,delta=Infinity;slides.forEach((slide,i)=>{const d=Math.abs(slide.getBoundingClientRect().left-rect.left);if(d<delta){delta=d;best=i;}});update(best);ticking=false;});},{passive:true});
 })();
 </script>
-</body>
+<script>(function(){const slides=[...document.querySelectorAll(".review-slide")];const counter=document.getElementById("review-counter");let active=0;function show(n){active=(n+slides.length)%slides.length;slides.forEach((el,i)=>{el.hidden=i!==active});counter.textContent=String(active+1).padStart(2,"0")+" / "+String(slides.length).padStart(2,"0")}document.getElementById("review-prev").addEventListener("click",()=>show(active-1));document.getElementById("review-next").addEventListener("click",()=>show(active+1));const root=document.querySelector(".review-carousel");let start=null;root.addEventListener("touchstart",e=>{start=e.changedTouches[0].clientX},{passive:true});root.addEventListener("touchend",e=>{if(start===null)return;const dx=e.changedTouches[0].clientX-start;if(Math.abs(dx)>45)show(active+(dx<0?1:-1));start=null},{passive:true});})();</script></body>
 </html>
