@@ -62,3 +62,10 @@
 
 /* Keep the hero image caption entirely inside the mobile viewport */
 @media(max-width:700px){.hero-picture figcaption{box-sizing:border-box;width:100%;max-width:100%;padding:8px 5% 0;gap:10px;align-items:center}.hero-picture figcaption span{min-width:0}.hero-picture figcaption span:last-child{text-align:right}}
+
+/* Mobile hero masthead: intentional two-line composition; no clipped lettering */
+@media(max-width:700px){
+ .masthead{position:relative;left:auto;top:auto;margin:38px 5% 0;width:90%;max-width:90%;white-space:normal;font-size:clamp(78px,21vw,145px);line-height:.78;letter-spacing:-.075em;overflow:visible}
+ .masthead em{display:block;margin-top:8px;font-size:.70em;line-height:.9;letter-spacing:-.075em;white-space:nowrap;-webkit-text-stroke:1px var(--wine)}
+ .hero-picture{margin-top:10px}
+}
