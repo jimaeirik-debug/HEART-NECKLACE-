@@ -59,3 +59,6 @@
 /* Hero HEARTSICK wordmark: 30% larger, preserving existing type styling */
 @media(min-width:701px){.masthead{font-size:clamp(110.5px,15.99vw,247px)}}
 @media(max-width:700px){.masthead{font-size:16.12vw}}
+
+/* Keep the hero image caption entirely inside the mobile viewport */
+@media(max-width:700px){.hero-picture figcaption{box-sizing:border-box;width:100%;max-width:100%;padding:8px 5% 0;gap:10px;align-items:center}.hero-picture figcaption span{min-width:0}.hero-picture figcaption span:last-child{text-align:right}}
