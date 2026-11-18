@@ -131,7 +131,7 @@
     var c=loadCart(), ids=Object.keys(c);
     var action=ids.length ? '<p style="margin-top:30px"><button type="button" id="start-checkout" class="btn">CONTINUE TO SECURE PAYMENT ↗</button><span class="small muted" id="checkout-feedback" aria-live="polite" style="display:block;margin-top:14px"></span></p>' : "";
     return '<main id="main"><div class="container bag-page"><div class="eyebrow">PAYMENTS / HEART & SPOONED</div><h1>Secure <em>checkout.</em></h1>'+
-      '<div class="message">Online ordering is not open yet. Heart & Spooned will use Shopify's secure checkout, like GOOD WEIRD STUFF, with a separate Heart & Spooned store. Payment methods will depend on what is enabled and available at checkout. No payment can be taken on this page.</div>'+
+      '<div class="message">Online ordering is not open yet. Heart & Spooned will use secure Shopify checkout, like GOOD WEIRD STUFF, with a separate Heart & Spooned store. Payment methods will depend on what is enabled and available at checkout. No payment can be taken on this page.</div>'+
       '<div class="process-grid"><div><div class="eyebrow">01</div><h3>Choose a piece</h3><p class="muted small">Only released, in-stock products can be added to the bag.</p></div>'+
       '<div><div class="eyebrow">02</div><h3>Confirm delivery</h3><p class="muted small">Shipping options and any applicable taxes will be presented before payment.</p></div>'+
       '<div><div class="eyebrow">03</div><h3>Pay securely</h3><p class="muted small">When ordering opens, Shopify will handle secure checkout and present available payment methods, such as Shop Pay, Apple Pay and Google Pay where eligible.</p></div></div>'+
