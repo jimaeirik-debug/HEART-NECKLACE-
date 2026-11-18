@@ -41,7 +41,7 @@
       '<p class="footer-description">Beautifully strange accessories, jewelry and objects worth keeping. A changing collection, not just one necklace.</p></div>'+
       '<div class="footer-col"><h4>EXPLORE</h4><a href="/shop.html">Shop all</a><a href="/handbags.html">Suede handbags</a><a href="/jewelry.html">Jewelry archive</a><a href="/about.html">Our story</a></div>'+
       '<div class="footer-col"><h4>YOUR ORDER</h4><a href="/cart.html">Shopping bag</a><a href="/checkout.html">Checkout information</a>'+
-      '<p class="small" style="color:#d7bdc4;max-width:260px">Products and payment will become available once the new collection and secure checkout are ready.</p></div></div>'+
+      '<p class="small" style="color:#d7bdc4;max-width:260px">Products and payments will become available once the new collection and the separate Shopify checkout are ready.</p></div></div>'+
       '<div class="footer-bottom"><span>© '+new Date().getFullYear()+' HEART & SPOONED</span><span>INDEPENDENT FASHION OBJECTS · ONLINE STORE IN PREPARATION</span></div></footer>';
   }
   function suedeVisual() {
@@ -130,10 +130,10 @@
     var c=loadCart(), ids=Object.keys(c);
     var action=ids.length ? '<p style="margin-top:30px"><button type="button" id="start-checkout" class="btn">CONTINUE TO SECURE PAYMENT ↗</button><span class="small muted" id="checkout-feedback" aria-live="polite" style="display:block;margin-top:14px"></span></p>' : "";
     return '<main id="main"><div class="container bag-page"><div class="eyebrow">PAYMENTS / HEART & SPOONED</div><h1>Secure <em>checkout.</em></h1>'+
-      '<div class="message">Online ordering is not open yet. We are connecting the payment provider and configuring shipping, taxes and the new product collection. No payment will be taken on this page.</div>'+
+      '<div class="message">Online ordering is not open yet. Heart & Spooned will use Shopify's secure checkout, like GOOD WEIRD STUFF, with a separate Heart & Spooned store. Payment methods will depend on what is enabled and available at checkout. No payment can be taken on this page.</div>'+
       '<div class="process-grid"><div><div class="eyebrow">01</div><h3>Choose a piece</h3><p class="muted small">Only released, in-stock products can be added to the bag.</p></div>'+
       '<div><div class="eyebrow">02</div><h3>Confirm delivery</h3><p class="muted small">Shipping options and any applicable taxes will be presented before payment.</p></div>'+
-      '<div><div class="eyebrow">03</div><h3>Pay securely</h3><p class="muted small">Checkout will be hosted by our payment provider when ordering opens.</p></div></div>'+
+      '<div><div class="eyebrow">03</div><h3>Pay securely</h3><p class="muted small">When ordering opens, Shopify will handle secure checkout and present available payment methods, such as Shop Pay, Apple Pay and Google Pay where eligible.</p></div></div>'+
       action+'<p style="margin-top:38px"><a href="/shop.html" class="btn btn-outline">RETURN TO THE COLLECTION ↗</a></p>'+
       '<p class="small muted" style="margin-top:20px">Bag items: '+ids.length+'. The payment service is not yet active.</p></div></main>';
   }
