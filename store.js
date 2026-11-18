@@ -128,12 +128,13 @@
   }
   function checkout() {
     var c=loadCart(), ids=Object.keys(c);
+    var action=ids.length ? '<p style="margin-top:30px"><button type="button" id="start-checkout" class="btn">CONTINUE TO SECURE PAYMENT ↗</button><span class="small muted" id="checkout-feedback" aria-live="polite" style="display:block;margin-top:14px"></span></p>' : "";
     return '<main id="main"><div class="container bag-page"><div class="eyebrow">PAYMENTS / HEART & SPOONED</div><h1>Secure <em>checkout.</em></h1>'+
       '<div class="message">Online ordering is not open yet. We are connecting the payment provider and configuring shipping, taxes and the new product collection. No payment will be taken on this page.</div>'+
       '<div class="process-grid"><div><div class="eyebrow">01</div><h3>Choose a piece</h3><p class="muted small">Only released, in-stock products can be added to the bag.</p></div>'+
       '<div><div class="eyebrow">02</div><h3>Confirm delivery</h3><p class="muted small">Shipping options and any applicable taxes will be presented before payment.</p></div>'+
       '<div><div class="eyebrow">03</div><h3>Pay securely</h3><p class="muted small">Checkout will be hosted by our payment provider when ordering opens.</p></div></div>'+
-      '<p style="margin-top:38px"><a href="/shop.html" class="btn btn-outline">RETURN TO THE COLLECTION ↗</a></p>'+
+      action+'<p style="margin-top:38px"><a href="/shop.html" class="btn btn-outline">RETURN TO THE COLLECTION ↗</a></p>'+
       '<p class="small muted" style="margin-top:20px">Bag items: '+ids.length+'. The payment service is not yet active.</p></div></main>';
   }
   function success() {
@@ -155,6 +156,20 @@
   if(page==="cart"){
     Array.prototype.forEach.call(document.querySelectorAll("[data-remove]"),function(btn){
       btn.addEventListener("click",function(){var c=loadCart();delete c[btn.getAttribute("data-remove")];saveCart(c);location.reload();});
+    });
+  }
+  if(page==="checkout"){
+    var button=document.getElementById("start-checkout");
+    if(button) button.addEventListener("click",async function(){
+      var feedback=document.getElementById("checkout-feedback");
+      button.disabled=true;feedback.textContent="Connecting to secure checkout…";
+      try{
+        var bag=loadCart(),items=Object.keys(bag).map(function(id){return {id:id,quantity:bag[id]};});
+        var response=await fetch("/api/create-checkout",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({items:items})});
+        var data=await response.json();
+        if(!response.ok || !data.url || !/^https:\/\/checkout\.stripe\.com\//.test(data.url))throw Error(data.error||"Checkout unavailable.");
+        window.location.assign(data.url);
+      }catch(err){feedback.textContent=err.message||"Checkout is currently unavailable.";button.disabled=false;}
     });
   }
 })();
