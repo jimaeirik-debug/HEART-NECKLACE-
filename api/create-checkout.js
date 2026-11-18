@@ -1,94 +1,82 @@
-
 /**
- * Heart & Spooned — Stripe-hosted checkout.
+ * Heart & Spooned — separate Shopify store checkout gateway.
+ * NO connection to GOOD WEIRD STUFF. Product catalog is disabled until
+ * the new Heart & Spooned Shopify store has verified inventory and payments.
  *
- * SAFETY: No products are enabled for purchase until the owner confirms their
- * product, price, stock, shipping, tax and IP rights. Never trust a browser-sent price.
+ * Required (on the Heart & Spooned Vercel project):
+ * SHOPIFY_CHECKOUT_ENABLED=true
+ * SHOPIFY_STOREFRONT_DOMAIN=the-heart-and-spooned-store.myshopify.com
+ * SHOPIFY_STOREFRONT_ACCESS_TOKEN=... (configure privately in Vercel)
  *
- * Environment settings (configure directly in the Vercel dashboard):
- * STRIPE_SECRET_KEY, STRIPE_SHIPPING_RATE_ID, STRIPE_PAYMENTS_ENABLED=true,
- * STRIPE_AUTOMATIC_TAX_ENABLED=true.
+ * Enable products only after seller confirmation and accurate variant IDs.
  */
-const SHOP_ORIGIN = "https://heartandspooned.com";
-const PRODUCTS = Object.freeze({
-  "necklace-heart-spoon": { available: false, priceNokOre: null, name: "Heart & Spoon Necklace" },
-  "suede-handbag": { available: false, priceNokOre: null, name: "Suede Handbag" }
+const CATALOG = Object.freeze({
+  "necklace-heart-spoon": { enabled: false, variantId: null },
+  "suede-handbag": { enabled: false, variantId: null }
 });
-const allowedOrigins = new Set(["https://heartandspooned.com", "https://www.heartandspooned.com"]);
+const ALLOWED_ORIGINS = new Set(["https://heartandspooned.com","https://www.heartandspooned.com"]);
+const CHECKOUT_API_VERSION = "2026-10";
 
-function json(res, code, body) {
-  res.setHeader("Content-Type", "application/json; charset=utf-8");
-  res.setHeader("Cache-Control", "no-store");
-  return res.status(code).json(body);
+function reply(res,status,body) {
+  res.setHeader("Cache-Control","no-store");
+  return res.status(status).json(body);
 }
-
-export default async function handler(req, res) {
+export default async function handler(req,res) {
   if (req.method !== "POST") {
-    res.setHeader("Allow", "POST");
-    return json(res, 405, {error:"Only POST requests are supported."});
+    res.setHeader("Allow","POST");
+    return reply(res,405,{error:"Only POST requests are supported."});
   }
-  var origin = req.headers.origin;
-  if (origin && !allowedOrigins.has(origin)) return json(res, 403, {error:"Origin not allowed."});
-  if (process.env.STRIPE_PAYMENTS_ENABLED !== "true" ||
-      process.env.STRIPE_AUTOMATIC_TAX_ENABLED !== "true" ||
-      !process.env.STRIPE_SECRET_KEY ||
-      !process.env.STRIPE_SHIPPING_RATE_ID) {
-    return json(res, 503, {error:"Checkout is not available yet. The shop is preparing its payment, tax and delivery settings."});
+  const origin=req.headers.origin;
+  if (origin && !ALLOWED_ORIGINS.has(origin)) {
+    return reply(res,403,{error:"Origin not allowed."});
   }
-  var input = req.body && typeof req.body === "object" ? req.body : {};
-  if (!Array.isArray(input.items) || input.items.length === 0 || input.items.length > 12) {
-    return json(res, 400, {error:"A valid shopping bag is required."});
+  if (process.env.SHOPIFY_CHECKOUT_ENABLED !== "true") {
+    return reply(res,503,{error:"Shopify checkout for Heart & Spooned is not connected yet."});
   }
-  var quantities = {};
-  for (var i = 0; i < input.items.length; i++) {
-    var item = input.items[i];
-    if (!item || typeof item.id !== "string" || !Number.isInteger(item.quantity) || item.quantity < 1 || item.quantity > 10) {
-      return json(res, 400, {error:"Invalid product or quantity."});
+  const domain=(process.env.SHOPIFY_STOREFRONT_DOMAIN||"").toLowerCase().trim();
+  const token=process.env.SHOPIFY_STOREFRONT_ACCESS_TOKEN||"";
+  if (!/^[a-z0-9][a-z0-9.-]*\.myshopify\.com$/.test(domain)||!token) {
+    return reply(res,503,{error:"The Heart & Spooned checkout needs configuration."});
+  }
+  const body=req.body||{};
+  if (!Array.isArray(body.items)||!body.items.length||body.items.length>12) {
+    return reply(res,400,{error:"A valid shopping bag is required."});
+  }
+  const unique=new Map();
+  for(const item of body.items) {
+    if(!item||typeof item.id!=="string"||!Number.isInteger(item.quantity)||item.quantity<1||item.quantity>10) {
+      return reply(res,400,{error:"Invalid item or quantity."});
     }
-    var product = PRODUCTS[item.id];
-    if (!product || product.available !== true || !Number.isInteger(product.priceNokOre) || product.priceNokOre < 100) {
-      return json(res, 409, {error:"One or more products are not currently for sale."});
+    const product=CATALOG[item.id];
+    if(!product||!product.enabled||!/^gid:\/\/shopify\/ProductVariant\/\d+$/.test(product.variantId||"")) {
+      return reply(res,409,{error:"A product in your bag is not available for purchase."});
     }
-    quantities[item.id] = (quantities[item.id] || 0) + item.quantity;
-    if (quantities[item.id] > 10) return json(res, 400, {error:"Maximum quantity exceeded."});
+    const qty=(unique.get(item.id)||0)+item.quantity;
+    if(qty>10) return reply(res,400,{error:"Maximum quantity exceeded."});
+    unique.set(item.id,qty);
   }
-
-  var form = new URLSearchParams();
-  form.set("mode", "payment");
-  form.set("success_url", SHOP_ORIGIN + "/checkout-success.html?session_id={CHECKOUT_SESSION_ID}");
-  form.set("cancel_url", SHOP_ORIGIN + "/cart.html?checkout_cancelled=1");
-  form.set("billing_address_collection", "required");
-  form.set("customer_creation", "always");
-  form.set("automatic_tax[enabled]", "true");
-  form.set("shipping_address_collection[allowed_countries][0]", "NO"); // Expand only after confirmed fulfillment.
-  form.set("shipping_options[0][shipping_rate]", process.env.STRIPE_SHIPPING_RATE_ID);
-  form.set("metadata[shop]", "heartandspooned.com");
-  form.set("metadata[version]", "1");
-  var pos = 0;
-  for (var id of Object.keys(quantities)) {
-    var p = PRODUCTS[id];
-    form.set("line_items["+pos+"][price_data][currency]", "nok");
-    form.set("line_items["+pos+"][price_data][unit_amount]", String(p.priceNokOre));
-    form.set("line_items["+pos+"][price_data][product_data][name]", p.name);
-    form.set("line_items["+pos+"][quantity]", String(quantities[id]));
-    pos++;
-  }
-
+  const lines=[...unique].map(([id,quantity])=>({merchandiseId:CATALOG[id].variantId,quantity}));
+  const query='mutation CartCreate($input:CartInput!){cartCreate(input:$input){cart{id checkoutUrl} userErrors{field message}}}';
   try {
-    var stripe = await fetch("https://api.stripe.com/v1/checkout/sessions", {
+    const response=await fetch("https://"+domain+"/api/"+CHECKOUT_API_VERSION+"/graphql.json",{
       method:"POST",
-      headers:{"Authorization":"Bearer " + process.env.STRIPE_SECRET_KEY,
-               "Content-Type":"application/x-www-form-urlencoded"},
-      body:form.toString()
+      headers:{"Content-Type":"application/json","X-Shopify-Storefront-Access-Token":token},
+      body:JSON.stringify({query,variables:{input:{lines}}})
     });
-    var result=await stripe.json();
-    if (!stripe.ok || typeof result.url !== "string" || !result.url.startsWith("https://checkout.stripe.com/")) {
-      console.error("Stripe Checkout creation error", {status:stripe.status, type:result.error && result.error.type});
-      return json(res, 502, {error:"Secure checkout could not start. Please try again later."});
+    if(!response.ok) return reply(res,502,{error:"Shopify checkout is temporarily unavailable."});
+    const payload=await response.json();
+    const checkout=payload?.data?.cartCreate;
+    const url=checkout?.cart?.checkoutUrl;
+    if(payload.errors?.length||checkout?.userErrors?.length||typeof url!=="string") {
+      return reply(res,409,{error:"The shopping bag could not be checked out. Verify product availability."});
     }
-    return json(res, 200, {url:result.url});
-  } catch (e) {
-    console.error("Checkout connection failed");
-    return json(res, 502, {error:"Secure checkout is temporarily unavailable."});
+    const parsed=new URL(url);
+    if(parsed.protocol!=="https:"||!(parsed.hostname===domain||parsed.hostname.endsWith(".myshopify.com")||parsed.hostname==="checkout.shopify.com"||parsed.hostname.endsWith(".shopify.com"))) {
+      return reply(res,502,{error:"Unexpected checkout destination."});
+    }
+    return reply(res,200,{url:parsed.href});
+  } catch(error) {
+    console.error("Shopify checkout start failed");
+    return reply(res,502,{error:"Secure checkout is temporarily unavailable."});
   }
 }
