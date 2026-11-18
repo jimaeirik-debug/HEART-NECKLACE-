@@ -2,9 +2,10 @@
 (function () {
   "use strict";
   var IMAGE_ROOT = "https://raw.githubusercontent.com/jimaeirik-debug/HEART-NECKLACE-/main/";
+  var SUEDE_CAMPAIGN_IMAGE = "https://cdn.shopify.com/s/files/1/0605/4841/5546/files/heart-and-spooned-suede-bag-editorial.png?v=1795006482";
   var PRODUCTS = {
     "necklace-heart-spoon": {id:"necklace-heart-spoon", name:"The Heart & Spoon Necklace", category:"jewelry", priceNok:null, available:false, note:"Archive — not currently available", photo:IMAGE_ROOT+"BUST.png"},
-    "suede-handbag": {id:"suede-handbag", name:"The Suede Handbag", category:"handbags", priceNok:null, available:false, note:"Coming soon — photographs and details to follow", photo:null}
+    "suede-handbag": {id:"suede-handbag", name:"The Suede Handbag", category:"handbags", priceNok:null, available:false, note:"Coming soon — editorial preview; final product specifications to follow", photo:SUEDE_CAMPAIGN_IMAGE}
   };
   var page = document.body.getAttribute("data-page") || "home";
   var root = document.getElementById("site");
@@ -55,13 +56,13 @@
     return '<main id="main"><section class="home-hero"><div class="home-copy"><span class="eyebrow">THE OBJECTS OF DESIRE EDIT — NO. 001</span>'+
     '<h1>Good things<br><em>have</em> a little<br><em>strangeness.</em></h1>'+
     '<p>Not just jewelry. Heart &amp; Spooned is becoming a home for expressive handbags, accessories and small objects with a point of view.</p>'+
-    '<div class="hero-actions"><a class="btn" href="/shop.html">DISCOVER THE EDIT <span aria-hidden="true">↗</span></a><a class="link-underline" href="/handbags.html">SUede handbags, soon</a></div></div>'+
-    '<div class="hero-visual"><img src="'+IMAGE_ROOT+'BUST.png" alt="Ornate gold heart pendant photographed on rich burgundy velvet" fetchpriority="high">'+
-    '<span class="image-label">FROM THE JEWELRY ARCHIVE · NOT FOR SALE</span></div></section>'+
+    '<div class="hero-actions"><a class="btn" href="/shop.html">DISCOVER THE EDIT <span aria-hidden="true">↗</span></a><a class="link-underline" href="/handbags.html">Suede handbags, soon</a></div></div>'+
+    '<div class="hero-visual"><img src="'+SUEDE_CAMPAIGN_IMAGE+'" alt="Heart & Spooned editorial: model in burgundy outfit holding a brown suede handbag" fetchpriority="high">'+
+    '<span class="image-label">THE SUEDE EDIT · CAMPAIGN PREVIEW · COMING SOON</span></div></section>'+
     '<div class="issue-strip"><div>01 / FASHION ACCESSORIES</div><div>02 / OBJECTS WITH CHARACTER</div><div>03 / MORE TO COME</div></div>'+
     '<section class="section"><div class="container"><div class="section-heading"><div><div class="eyebrow">SHOP BY CHAPTER</div><h2>Two sides of<br><em>the story.</em></h2></div><p>One collection in the making, one from our archive. Explore the worlds while we prepare the next release.</p></div>'+
     '<div class="collection-grid">'+
-    collectionCard('Suede Handbags','COMING SOON','/handbags.html',suedeVisual(),'NEXT CHAPTER')+
+    collectionCard('Suede Handbags','COMING SOON','/handbags.html','<img src="'+SUEDE_CAMPAIGN_IMAGE+'" alt="Model styling a brown suede hobo-style handbag in the Heart & Spooned editorial" loading="lazy">','NEXT CHAPTER')+
     collectionCard('The Jewelry Archive','EXPLORE','/jewelry.html','<img src="'+IMAGE_ROOT+'necklace-on-velvet.png" alt="Gold heart pendant necklace resting on velvet" loading="lazy">','FROM THE ARCHIVE')+
     '</div></div></section>'+
     '<section class="editorial-split"><div class="editorial-photo"><img src="'+IMAGE_ROOT+'luxury-necklace-on-velvet%20(1).png" alt="Detail of a gold heart and spoon necklace on velvet" loading="lazy"></div>'+
@@ -69,7 +70,7 @@
     '<section class="signup-note"><div class="eyebrow">THE NEXT CHAPTER</div><h2>Suede. Softness.<br><em>Something new.</em></h2><p>The handbag collection is in development. We’ll share the real photographs, details and pricing when it is ready.</p><a class="link-underline" href="/handbags.html">EXPLORE THE HANDBAG EDIT ↗</a></section></main>';
   }
   function productTile(item) {
-    var media=item.photo?'<img src="'+item.photo+'" loading="lazy" alt="'+item.name+' product photography">':suedeVisual();
+    var media=item.photo?'<img src="'+item.photo+'" loading="lazy" alt="'+(item.category==="handbags"?"Editorial preview: model holding a brown suede handbag, final product specifications pending":item.name+" product photography")+'">':suedeVisual();
     return '<article class="product-tile" data-category="'+item.category+'"><a href="'+(item.category==="jewelry"?'/jewelry.html':'/handbags.html')+'"><div class="tile-photo">'+
       '<span class="pill">'+(item.available?'AVAILABLE':item.category==="jewelry"?'ARCHIVE':'COMING SOON')+'</span>'+media+'</div></a>'+
       '<div style="display:flex;justify-content:space-between;gap:15px;align-items:baseline"><h2 class="tile-title">'+item.name+'</h2><span class="status">'+(item.available?money(item.priceNok):"NOT FOR SALE")+'</span></div>'+
@@ -77,19 +78,19 @@
   }
   function shop() {
     return '<main id="main"><section class="page-intro"><div class="container"><div class="eyebrow">THE FASHION EDIT</div><h1>Shop <em>the edit.</em></h1>'+
-      '<p>Handbags, jewelry and unusual accessories, collected with an eye for the unexpected. The next drop is being prepared; no products are currently available to purchase.</p></div></section>'+
+      '<p>Handbags, jewelry and unusual accessories, collected with an eye for the unexpected. The next drop is being prepared; upcoming product imagery is an editorial preview and nothing is currently available to purchase.</p></div></section>'+
       '<div class="container"><div class="shop-filters" role="group" aria-label="Filter collections"><button class="filter-chip active" data-filter="all" aria-pressed="true">ALL</button>'+
       '<button class="filter-chip" data-filter="handbags" aria-pressed="false">HANDBAGS</button><button class="filter-chip" data-filter="jewelry" aria-pressed="false">JEWELRY</button></div>'+
       '<div class="shop-grid" id="product-grid">'+productTile(PRODUCTS["suede-handbag"])+productTile(PRODUCTS["necklace-heart-spoon"])+'</div></div></main>';
   }
   function handbags() {
-    return '<main id="main"><section class="bag-feature"><div>'+suedeVisual()+'</div><div class="bag-copy"><div class="eyebrow">COMING SOON / ACCESSORIES</div>'+
-      '<h1>The suede<br><em>handbag.</em></h1><p>Soft texture. An expressive accessory. Our next chapter is handbags — starting with suede.</p>'+
-      '<p class="status" style="margin:18px 0 25px">PRODUCT PHOTOS, DETAILS & PRICING TO FOLLOW</p>'+
+    return '<main id="main"><section class="bag-feature"><div class="bag-lookbook-image"><img src="'+SUEDE_CAMPAIGN_IMAGE+'" alt="Model in burgundy ensemble holding a slouchy dark brown suede hobo-style bag" fetchpriority="high"><span class="image-label">EDITORIAL CAMPAIGN · PRODUCT DETAILS TO BE CONFIRMED</span></div><div class="bag-copy"><div class="eyebrow">COMING SOON / ACCESSORIES</div>'+
+      '<h1>The suede<br><em>handbag.</em></h1><p>A rich brown, slouchy hobo-style bag, styled with a head-to-toe burgundy look. Our next chapter begins with suede.</p><p>This editorial image is a styling preview. We will confirm the final bag, materials, dimensions and colors before orders open.</p>'+
+      '<p class="status" style="margin:18px 0 25px">PRODUCT DETAILS & PRICING TO FOLLOW</p>'+
       '<a href="/shop.html" class="btn btn-outline">EXPLORE ALL COLLECTIONS ↗</a></div></section>'+
       '<section class="section"><div class="container"><div class="section-heading"><div><div class="eyebrow">THE BAG EDIT</div><h2>Under<br><em>construction.</em></h2></div></div>'+
       '<div class="note-list"><div><div class="eyebrow">01 / MATERIAL</div><h3>Suede</h3><p>The opening material direction for the handbag collection.</p></div>'+
-      '<div><div class="eyebrow">02 / DETAILS</div><h3>To be revealed</h3><p>Measurements, colors and hardware will be confirmed alongside real product photographs.</p></div>'+
+      '<div><div class="eyebrow">02 / DETAILS</div><h3>To be revealed</h3><p>Measurements, colors, hardware and final product photographs will be confirmed before launch.</p></div>'+
       '<div><div class="eyebrow">03 / AVAILABILITY</div><h3>Not released</h3><p>Ordering will open only once the product and secure checkout are ready.</p></div></div></div></section></main>';
   }
   function jewelry() {
